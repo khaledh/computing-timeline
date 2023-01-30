@@ -1,25 +1,14 @@
 <!DOCTYPE html>
-  <html>
-    <head>
-      <title>Computing Timeline</title>
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-      <link rel="stylesheet" href="file:///c:\Users\Khaled\.vscode\extensions\shd101wyy.markdown-preview-enhanced-0.6.7\node_modules\@shd101wyy\mume\dependencies\katex\katex.min.css">
-
-
-
-
-
-
-
-
-
-      <style>
-      /**
- * prism.js Github theme based on GitHub's theme.
- * @author Sam Clarke
- */
+<html>
+<head>
+  <title>Computing Timeline</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    /**
+* prism.js Github theme based on GitHub's theme.
+* @author Sam Clarke
+*/
 code[class*="language-"],
 pre[class*="language-"] {
   color: #333;
@@ -269,14 +258,11 @@ dd {
   font-size: 82%;
 }
 
-      </style>
-    </head>
-    <body for="html-export" >
-      <div class="mume markdown-preview  "  >
-      <style>
-  html {
-    overflow-y:scroll;
-  }
+    </style>
+  <style>
+html {
+  overflow-y:scroll;
+}
 
 .markdown-preview {
     padding: 0px 100px !important;
@@ -473,22 +459,37 @@ dd {
     evt.preventDefault();
   }
 </script>
-<h1 style="font-size: 20pt; margin-top: 20px;">Computing Timeline</h1>
+</head>
+    <body for="html-export" >
+      <div class="mume markdown-preview  "  >
+  <h1 style="font-size: 20pt; margin-top: 20px;">Computing Timeline</h1>
 
-<div class="row">
-  <div class="column-filters" style="user-select: none;">
-<div style="float:right; font-size: 10pt; margin-right: 10px;">
-  <a onclick="javascript:clearFilters(event);" href="">clear all</a>
-</div>
-<div class="buttons" onclick="toggleDef(event)">
-  <h5>Topics</h5>
-  {% for topic in topics %}
-  <span id="{{ topic.slug }}">{% if topic.abbr %}<abbr title="{{ topic.name }}">{{ topic.abbr }}</abbr>{% else %}{{ topic.name }}{% endif %}</span>
-  {% endfor %}
-</div>
-  </div> <!-- column-filters -->
-  <div class="column-content">
-  {% load date_filters %}
+  <div class="row">
+
+    <!-- Filters -->
+
+    <div class="column-filters" style="user-select: none;">
+      <div style="float:right; font-size: 10pt; margin-right: 10px;">
+        <a onclick="javascript:clearFilters(event);" href="">clear all</a>
+      </div>
+
+      {% for topic in topics %}
+        {% ifchanged topic.category %}
+          {% if forloop.counter0 > 0 %}
+      </div>
+          {% endif %}
+      <div class="buttons" onclick="toggleDef(event)">
+        <h5>{{ topic.get_category_display }}</h5>
+        {% endifchanged %}
+        <span id="{{ topic.slug }}">{% if topic.abbr %}<abbr title="{{ topic.name }}">{{ topic.abbr }}</abbr>{% else %}{{ topic.name }}{% endif %}</span>
+      {% endfor %}
+      </div>
+    </div> <!-- column-filters -->
+
+    <!-- Timeline -->
+
+    <div class="column-content">
+    {% load date_filters %}
 
   {% for entry in object_list %}
 
@@ -516,18 +517,7 @@ dd {
 
   {% endfor %}
 
-  </div> <!-- column-content -->
-</div> <!-- row -->
-
-      </div>
-
-
-    </body>
-
-
-
-
-
-
-
-  </html>
+    </div> <!-- column-content -->
+  </div> <!-- row -->
+</div></body>
+</html>

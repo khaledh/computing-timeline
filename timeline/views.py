@@ -1,3 +1,4 @@
+from django.db.models import Case, When, Value
 from django.db.models.functions import Coalesce
 from django.views import generic
 
@@ -11,5 +12,12 @@ class Timeline(generic.ListView):
     extra_context = {
         'topics': Topic.objects.annotate(
             name_ord=Coalesce('abbr', 'name')
-        ).order_by('name_ord').all(),
+        ).annotate(
+            category_ord=Case(
+                When(category=Topic.Category.TOPIC, then=Value(1)),
+                When(category=Topic.Category.ORG, then=Value(2)),
+                When(category=Topic.Category.PERSON, then=Value(3)),
+                default=Value(999),
+            )
+        ).order_by('category_ord', 'name_ord').all(),
     }
