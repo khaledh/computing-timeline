@@ -20,8 +20,8 @@ class Topic(models.Model):
     def __str__(self):
         return self.slug
 
-    # class Meta:
-    #     ordering = ['name']
+    class Meta:
+        ordering = ['slug']
 
 
 class Entry(models.Model):
