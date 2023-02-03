@@ -260,11 +260,11 @@ dd {
 
     </style>
   <style>
-html {
-  overflow-y:scroll;
-}
+  html {
+    overflow-y:scroll;
+  }
 
-.markdown-preview {
+  .markdown-preview {
     padding: 0px 100px !important;
   }
   h2 {
@@ -327,6 +327,7 @@ html {
   }
 
   .buttons > span {
+    margin-right: 0.3rem;
     padding: 0.2rem;
     border-radius: .2rem;
     border: 1px solid rgb(207, 207, 207);
@@ -383,6 +384,7 @@ html {
     <!-- Timeline -->
 
     <div class="column-content">
+      <div id="current-filters" class="buttons" onclick="toggleDef(event)"></div>
     {% load date_filters %}
 
   {% for entry in object_list %}

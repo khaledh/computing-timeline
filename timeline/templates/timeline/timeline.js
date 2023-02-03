@@ -1,10 +1,3 @@
-function setAllEntries(display) {
-  els = document.querySelectorAll('dd, dt, .year, h2');
-  for (el of els) {
-    el.style.display = display;
-  }
-}
-
 andColors = [
   '#FFE5CC', // light orange
   '#CCFFFF', // light blue
@@ -16,17 +9,33 @@ lastColorIndex = 0;
 
 // represent filters as "conjunction of disjunctions"; i.e. one AND of a group of ORs
 // e.g. (a | b | c) & (m | n) & (x)
-var andClause = JSON.parse(localStorage.getItem('andClause'));
-if (!andClause) {
-  andClause = [[]];
-}
 
-window.onload = function() {
-  setFilters();
-  showSelectedEntries();
-};
+var andClause = [[]];
+
+window.addEventListener('DOMContentLoaded', (event) => {
+  var savedState = JSON.parse(localStorage.getItem('andClause'));
+  if (savedState) {
+    andClause = savedState;
+    setFilters();
+    showSelectedEntries();
+  }
+});
+
+var esc = 0;
+
+document.addEventListener('keydown', function(e) {
+    if (e.keyCode == 27) {
+      esc++;
+      if (esc == 2) {
+        esc = 0;
+        clearFilters();
+      }
+    }
+});
 
 function setFilters() {
+  document.querySelector('#current-filters').replaceChildren();
+
   var buttons = document.querySelectorAll('.buttons > span');
   var buttonsHash = {};
   for (el of buttons) {
@@ -41,8 +50,16 @@ function setFilters() {
       var el = buttonsHash[id];
       el.classList.add('shadow-inner');
       el.style.backgroundColor = andColors[currentColorIndex];
+      document.querySelector('#current-filters').append(el.cloneNode(true));
     }
     currentColorIndex++;
+  }
+}
+
+function setAllEntries(display) {
+  els = document.querySelectorAll('dd, dt, .year, h2');
+  for (el of els) {
+    el.style.display = display;
   }
 }
 
@@ -55,7 +72,7 @@ function showSelectedEntries() {
   }
   var selectorClasses = orSelectors.map(s => `has(> ${s})`).join(':');
   var selector = `dd:${selectorClasses}`
-  console.log(selector);
+//  console.log(selector);
 
   var els = document.querySelectorAll(selector);
   for (el of els) {
@@ -107,8 +124,8 @@ function toggleDef(event) {
 
   localStorage.setItem('andClause', JSON.stringify(andClause));
 
-  console.log('AND=', JSON.stringify(andClause));
-  console.log('lastColorIndex=', lastColorIndex);
+//  console.log('AND=', JSON.stringify(andClause));
+//  console.log('lastColorIndex=', lastColorIndex);
 
   if (andClause.length == 1 && andClause[0].length == 0) {
     setAllEntries('');
@@ -121,12 +138,7 @@ function toggleDef(event) {
 function clearFilters(evt) {
   andClause = [[]];
   localStorage.removeItem('andClause');
-  var buttons = document
-    .querySelectorAll('.buttons > span')
-    .forEach(b => {
-      b.classList.remove('shadow-inner');
-      b.style.backgroundColor = null;
-  });
+  setFilters();
   setAllEntries('');
   evt.preventDefault();
 }
