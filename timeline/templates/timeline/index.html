@@ -468,7 +468,7 @@ html {
 
     <!-- Filters -->
 
-    <div class="column-filters" style="user-select: none;">
+    <div class="column-filters" style="user-select: none">
       <div style="float:right; font-size: 10pt; margin-right: 10px;">
         <a onclick="javascript:clearFilters(event);" href="">clear all</a>
       </div>
@@ -478,10 +478,10 @@ html {
           {% if forloop.counter0 > 0 %}
       </div>
           {% endif %}
-      <div class="buttons" onclick="toggleDef(event)">
-        <h5>{{ topic.get_category_display }}</h5>
+      <h5>{{ topic.get_category_display }}</h5>
+      <div class="buttons" onclick="toggleDef(event)" style="column-count: 3">
         {% endifchanged %}
-        <span id="{{ topic.slug }}">{% if topic.abbr %}<abbr title="{{ topic.name }}">{{ topic.abbr }}</abbr>{% else %}{{ topic.name }}{% endif %}</span>
+        <span id="{{ topic.slug }}">{% if topic.abbr %}<abbr title="{{ topic.name }}">{{ topic.abbr }}</abbr>{% else %}{{ topic.name }}{% endif %}</span><br />
       {% endfor %}
       </div>
     </div> <!-- column-filters -->

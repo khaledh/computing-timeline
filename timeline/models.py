@@ -17,6 +17,9 @@ class Topic(models.Model):
         default=Category.TOPIC,
     )
 
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
     def __str__(self):
         return self.slug
 
@@ -29,6 +32,9 @@ class Entry(models.Model):
     desc = models.TextField(max_length=1000, null=True, blank=True)
     date = models.DateField()
     topics = models.ManyToManyField(Topic, related_name='entries', blank=True)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         verbose_name_plural = "entries"
