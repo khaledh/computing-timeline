@@ -393,10 +393,11 @@ dd {
 
     <div class="column-content">
       <div id="current-filters" class="buttons" onclick="toggleDef(event)"></div>
-    {% load date_filters %}
+  {% load date_filters %}
 
   {% for entry in object_list %}
 
+    {# decade #}
     {% ifchanged entry.date|decade %}
     {% if forloop.counter0 > 0 %}
     </div>
@@ -405,24 +406,27 @@ dd {
     <div class="decade">
     {% endifchanged %}
 
+      {# year #}
       {% ifchanged entry.date.year %}
       {% if forloop.counter0 > 0 %}
       </dl>
       {% endif %}
       <div class="year">{{ entry.date|date:'Y' }}</div>
-        <dl>
+      <dl>
       {% endifchanged %}
-        {% ifchanged entry.date.year entry.date.month %}
+
+        {# month #}
         {% if entry.date.month != 1 or entry.date.day != 1 %}
         <div class="month">{{ entry.date|date:'M' }}</div>
         {% endif %}
-        {% endifchanged %}
-          <dt>{{ entry.title }}</dt>
-          <dd>
-            {{ entry.desc|default:"<span class=\"todo\"></span>" }}
-            <br>
-            {% for topic in entry.topics.all %}<span class="{{ topic.slug }}"></span>{% endfor %}
-          </dd>
+
+        {# entry #}
+        <dt>{{ entry.title }}</dt>
+        <dd>
+          {{ entry.desc|default:"<span class=\"todo\"></span>" }}
+          <br>
+          {% for topic in entry.topics.all %}<span class="{{ topic.slug }}"></span>{% endfor %}
+        </dd>
 
   {% endfor %}
 
