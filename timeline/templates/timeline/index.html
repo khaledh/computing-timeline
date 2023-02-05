@@ -280,15 +280,23 @@ dd {
   }
 
   .decade {
-    margin-left: 4em;
+    margin-left: 5em;
   }
 
   .year {
-    margin-left: -4em;
+    margin-left: -5em;
     float: left;
     font-weight: bold;
     margin-top: -5px;
     padding-top: 5px;
+  }
+
+  .month {
+    margin-left: -2.2em;
+    float: left;
+    color: #aaa;
+    font-size: 80%;
+    padding-top: 2px;
   }
 
   .markdown-body .decade .year + dl dt:first-child {
@@ -404,6 +412,11 @@ dd {
       <div class="year">{{ entry.date|date:'Y' }}</div>
         <dl>
       {% endifchanged %}
+        {% ifchanged entry.date.year entry.date.month %}
+        {% if entry.date.month != 1 or entry.date.day != 1 %}
+        <div class="month">{{ entry.date|date:'M' }}</div>
+        {% endif %}
+        {% endifchanged %}
           <dt>{{ entry.title }}</dt>
           <dd>
             {{ entry.desc|default:"<span class=\"todo\"></span>" }}

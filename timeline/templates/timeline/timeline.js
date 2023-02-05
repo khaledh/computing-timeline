@@ -57,7 +57,7 @@ function setFilters() {
 }
 
 function setAllEntries(display) {
-  els = document.querySelectorAll('dd, dt, .year, h2');
+  els = document.querySelectorAll('dd, dt, .year, .month, h2');
   for (el of els) {
     el.style.display = display;
   }
@@ -72,15 +72,22 @@ function showSelectedEntries() {
   }
   var selectorClasses = orSelectors.map(s => `has(> ${s})`).join(':');
   var selector = `dd:${selectorClasses}`
-//  console.log(selector);
+  console.log(selector);
 
   var els = document.querySelectorAll(selector);
   for (el of els) {
     var display = '';
     el.style.display = display;
-    el.previousElementSibling.style.display = display;
-    el.parentNode.previousElementSibling.style.display = display;
-    el.parentNode.previousElementSibling.parentNode.previousElementSibling.style.display = display;
+    el.previousElementSibling.style.display = display; // <dt>
+    if (el.previousElementSibling.previousElementSibling && el.previousElementSibling.previousElementSibling.classList.contains('month')) {
+      el.previousElementSibling.previousElementSibling.style.display = display; // month
+    }
+    el.parentNode.previousElementSibling.style.display = display; // year
+//    console.log(el.parentNode.previousElementSibling);
+//    if (el.parentNode.previousElementSibling.previousElementSibling) {
+//      el.parentNode.previousElementSibling.previousElementSibling.style.display = display; // month
+//    }
+    el.parentNode.previousElementSibling.parentNode.previousElementSibling.style.display = display; // decade
   }
 }
 
