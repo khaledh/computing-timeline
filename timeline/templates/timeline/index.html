@@ -284,7 +284,7 @@ dd {
   }
 
   .year {
-    margin-left: -5em;
+    margin-left: -4.5em;
     float: left;
     font-weight: bold;
     margin-top: -5px;
@@ -296,7 +296,7 @@ dd {
     float: left;
     color: #aaa;
     font-size: 80%;
-    padding-top: 2px;
+    padding-top: 3px;
   }
 
   .markdown-body .decade .year + dl dt:first-child {
@@ -421,12 +421,14 @@ dd {
         {% endif %}
 
         {# entry #}
-        <dt>{{ entry.title }}</dt>
-        <dd>
+        <dt {% if entry.weight < 0 %}style="color: #bbb"{% endif %}>{{ entry.title }}</dt>
+        
+        <dd data-weight="{{ entry.weight }}" {% if entry.weight < 0 %}style="display: none; color: #aaa"{% endif %}>
           {{ entry.desc|default:"<span class=\"todo\"></span>" }}
           <br>
           {% for topic in entry.topics.all %}<span class="{{ topic.slug }}"></span>{% endfor %}
         </dd>
+        
 
   {% endfor %}
 

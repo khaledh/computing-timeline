@@ -1,6 +1,9 @@
 from datetime import date
 
 from django.contrib import admin
+from django.contrib.admin.widgets import AutocompleteSelect
+from django.db import models
+from django.forms import TextInput
 
 from timeline.models import Entry, Topic
 
@@ -26,7 +29,7 @@ class DecadeFilter(admin.SimpleListFilter):
 
 @admin.register(Entry)
 class EntryAdmin(admin.ModelAdmin):
-    list_display = ('title', 'topics_list', 'date')
+    list_display = ('title', 'topics_list', 'weight', 'date')
     list_filter = [DecadeFilter, 'topics']
     autocomplete_fields = ['topics']
     search_fields = ['title']
@@ -37,7 +40,22 @@ class EntryAdmin(admin.ModelAdmin):
     topics_list.short_description = 'Topics'
 
 
+class EntryInline(admin.TabularInline):
+    model = Topic.entries.through
+    autocomplete_fields = ['entry']
+    # formfield_overrides = {
+    #     models.ForeignKey: {
+    #         'widget': AutocompleteSelect(
+    #             Topic.entries.field,
+    #             admin.site,
+    #             attrs={'style': 'width: 450px'}
+    #         )
+    #     },
+    # }
+
+
 @admin.register(Topic)
 class TopicAdmin(admin.ModelAdmin):
     list_display = ('id', 'slug', 'name', 'category')
     search_fields = ['name', 'slug']
+    inlines = [EntryInline]

@@ -33,6 +33,16 @@ class Entry(models.Model):
     date = models.DateField()
     topics = models.ManyToManyField(Topic, related_name='entries', blank=True)
 
+    class Weight(models.IntegerChoices):
+        NEG1 = -1, '-1'
+        ZERO = 0, '0'
+        POS1 = 1, '+1'
+
+    weight = models.IntegerField(
+        choices=Weight.choices,
+        default=Weight.ZERO,
+    )
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

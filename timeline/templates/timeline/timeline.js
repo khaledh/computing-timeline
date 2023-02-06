@@ -14,7 +14,7 @@ var andClause = [[]];
 
 window.addEventListener('DOMContentLoaded', (event) => {
   var savedState = JSON.parse(localStorage.getItem('andClause'));
-  if (savedState) {
+  if (savedState && savedState.length > 0 && savedState[0].length > 0) {
     andClause = savedState;
     setFilters();
     showSelectedEntries();
@@ -77,7 +77,9 @@ function showSelectedEntries() {
   var els = document.querySelectorAll(selector);
   for (el of els) {
     var display = '';
-    el.style.display = display;
+    if (parseInt(el.dataset.weight) >= 0) {
+      el.style.display = display;
+    }
     el.previousElementSibling.style.display = display; // <dt>
     if (el.previousElementSibling.previousElementSibling && el.previousElementSibling.previousElementSibling.classList.contains('month')) {
       el.previousElementSibling.previousElementSibling.style.display = display; // month
