@@ -423,7 +423,10 @@ dd {
 
         {# entry #}
         <dt {% if entry.weight < 0 %}style="color: #bbb"{% endif %}>
-        {% if entry.company_count > 0 %}<img src="{% static 'timeline/company.png' %}" title="company">{% endif %} {{ entry.title }}
+        {% if entry.company_count > 0 %}<img src="{% static 'timeline/company.png' %}" title="company">{% endif %}
+        {% if entry.weight < 0 and entry.desc %}<span title="{{ entry.desc }}">{{ entry.title }}</span>
+        {% else %}{{ entry.title }}
+        {% endif %}
         </dt>
         
         <dd data-weight="{{ entry.weight }}" {% if entry.weight < 0 %}style="display: none; color: #aaa"{% endif %}>
