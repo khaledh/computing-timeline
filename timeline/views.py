@@ -1,4 +1,4 @@
-from django.db.models import Case, F, When, Value as V
+from django.db.models import Case, F, When, Value as V, Prefetch, Count, Q
 from django.db.models.functions import Coalesce, Lower, Reverse, Right, StrIndex
 from django.views import generic
 
@@ -6,8 +6,11 @@ from timeline.models import Entry, Topic
 
 
 class Timeline(generic.ListView):
-    queryset = Entry.objects.prefetch_related('topics')
     template_name = 'timeline/index.html'
+
+    queryset = Entry.objects.prefetch_related('topics').annotate(
+        company_count=Count('topics', filter=Q(topics__slug__in=['company']))
+    ).order_by('date')
 
     extra_context = {
         'topics': Topic.objects.annotate(
