@@ -320,6 +320,10 @@ dd {
     margin-right: .3rem;
   }
 
+  dt:not(dd[data-weight="-1"][style*="display:none"] ~ dd[style*="display:none"]) {
+    margin-top: 5px !important;
+  }
+
   .todo {
     background-color: #ffff00;
     content: "TODO";
