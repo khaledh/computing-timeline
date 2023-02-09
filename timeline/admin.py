@@ -57,5 +57,6 @@ class EntryInline(admin.TabularInline):
 @admin.register(Topic)
 class TopicAdmin(admin.ModelAdmin):
     list_display = ('id', 'slug', 'name', 'category')
+    list_filter = ['category']
     search_fields = ['name', 'slug']
     inlines = [EntryInline]

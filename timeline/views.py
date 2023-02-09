@@ -23,8 +23,9 @@ class Timeline(generic.ListView):
         ).annotate(
             category_ord=Case(
                 When(category=Topic.Category.TOPIC, then=V(1)),
-                When(category=Topic.Category.ORG, then=V(2)),
-                When(category=Topic.Category.PERSON, then=V(3)),
+                When(category=Topic.Category.COMPUTER, then=V(2)),
+                When(category=Topic.Category.ORG, then=V(3)),
+                When(category=Topic.Category.PERSON, then=V(4)),
                 default=V(999),
             )
         ).order_by('category_ord', 'name_ord').all(),

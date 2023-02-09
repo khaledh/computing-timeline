@@ -8,8 +8,9 @@ class Topic(models.Model):
 
     class Category(models.TextChoices):
         TOPIC = 'T', 'Topic'
-        PERSON = 'P', 'Person'
+        COMPUTER = 'C', 'Computer / Computer Family'
         ORG = 'O', 'Organization'
+        PERSON = 'P', 'Person'
 
     category = models.CharField(
         max_length=2,
