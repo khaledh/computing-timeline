@@ -29,7 +29,7 @@ class DecadeFilter(admin.SimpleListFilter):
 
 @admin.register(Entry)
 class EntryAdmin(admin.ModelAdmin):
-    list_display = ('title', 'topics_list', 'weight', 'date')
+    list_display = ('title', 'topics_list', 'weight', 'date' ,'created_at', 'updated_at')
     list_filter = [DecadeFilter, 'topics']
     autocomplete_fields = ['topics']
     search_fields = ['title']
@@ -56,7 +56,7 @@ class EntryInline(admin.TabularInline):
 
 @admin.register(Topic)
 class TopicAdmin(admin.ModelAdmin):
-    list_display = ('id', 'slug', 'name', 'category')
+    list_display = ('id', 'slug', 'name', 'abbr', 'category')
     list_filter = ['category']
     search_fields = ['name', 'slug']
     inlines = [EntryInline]
