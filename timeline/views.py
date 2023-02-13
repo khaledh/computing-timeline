@@ -9,7 +9,7 @@ class Timeline(generic.ListView):
     template_name = 'timeline/index.html'
 
     queryset = Entry.objects.prefetch_related('topics').annotate(
-        company_count=Count('topics', filter=Q(topics__slug__in=['company']))
+        company_org_count=Count('topics', filter=Q(topics__slug__in=['company', 'org']))
     ).order_by('date')
 
     extra_context = {
