@@ -21,16 +21,10 @@ window.addEventListener('DOMContentLoaded', (event) => {
   }
 });
 
-var esc = 0;
-
 document.addEventListener('keydown', function(e) {
-    if (e.keyCode == 27) {
-      esc++;
-      if (esc == 2) {
-        esc = 0;
-        clearFilters();
-      }
-    }
+  if (e.keyCode == 27) {
+    clearFilters();
+  }
 });
 
 function setFilters() {
