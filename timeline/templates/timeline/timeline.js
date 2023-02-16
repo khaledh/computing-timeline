@@ -33,7 +33,7 @@ function setFilters() {
   var buttons = document.querySelectorAll('.buttons > span');
   var buttonsHash = {};
   for (el of buttons) {
-    buttonsHash[el.id] = el;
+    buttonsHash[el.dataset.id] = el;
     el.classList.remove('shadow-inner');
     el.style.backgroundColor = null;
   }
@@ -62,7 +62,7 @@ function showSelectedEntries() {
 
   var orSelectors = [];
   for (orClause of andClause) {
-    orSelectors.push(orClause.map(id => `.${id}`).join(', '));
+    orSelectors.push(orClause.map(id => `span[data-topic="${id}"]`).join(', '));
   }
   var selectorClasses = orSelectors.map(s => `has(> ${s})`).join(':');
   var selector = `dd:${selectorClasses}`
@@ -92,10 +92,10 @@ function toggleDef(event) {
     return;
   }
 
-  id = event.target.id;
+  id = event.target.dataset.id;
   if (id == '') {
     // node is <abbr>, get parent <span> id
-    id = event.target.parentNode.id;
+    id = event.target.parentNode.dataset.id;
   }
 
   // if id is already selected, remove it

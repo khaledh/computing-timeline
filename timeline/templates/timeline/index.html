@@ -264,7 +264,7 @@
   }
 
   body {
-    background-color: #F8F6F0 !important;
+  /*  background-color: #F8F6F0 !important; */
   }
 
   .markdown-preview {
@@ -314,7 +314,7 @@
   }
 
   dd > br+span:after, dd > span+span:after {
-    content: attr(class);
+    content: attr(data-topic);
     font-size: 11px;
     background-color: #eee;
     color: #888;
@@ -329,7 +329,6 @@
 
   .todo {
     background-color: #ffff00;
-    content: "TODO";
   }
 
   .todo:after {
@@ -392,7 +391,7 @@
       <h5>{{ topic.get_category_display }}</h5>
       <div class="buttons" onclick="toggleDef(event)" style="column-count: 3">
         {% endifchanged %}
-        <span id="{{ topic.slug }}">{% if topic.abbr %}<abbr title="{{ topic.name }}">{{ topic.abbr }}</abbr>{% else %}{{ topic.name }}{% endif %}</span><br />
+        <span data-id="{{ topic.slug }}">{% if topic.abbr %}<abbr title="{{ topic.name }}">{{ topic.abbr }}</abbr>{% else %}{{ topic.name }}{% endif %}</span><br />
       {% endfor %}
       </div>
     </div> <!-- column-filters -->
@@ -440,7 +439,7 @@
         <dd data-weight="{{ entry.weight }}" {% if entry.weight < 0 %}style="display: none; color: #aaa"{% endif %}>
           {{ entry.desc|default:"<span class=\"todo\"></span>" }}
           <br>
-          {% for topic in entry.topics.all %}<span class="{{ topic.slug }}"></span>{% endfor %}
+          {% for topic in entry.topics.all %}<span data-topic="{{ topic.slug }}"></span>{% endfor %}
         </dd>
         
 
