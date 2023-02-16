@@ -93,7 +93,7 @@ function toggleDef(event) {
   }
 
   id = event.target.dataset.id;
-  if (id == '') {
+  if (!id) {
     // node is <abbr>, get parent <span> id
     id = event.target.parentNode.dataset.id;
   }
